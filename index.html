@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>瞬間単語キャッチ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell" aria-live="polite">
+      <section class="top-panel" aria-label="ゲーム情報">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">SR</span>
+          <div>
+            <h1>瞬間単語キャッチ</h1>
+            <p>Speed Focus</p>
+          </div>
+        </div>
+
+        <div class="stats" aria-label="スコア状況">
+          <div class="stat">
+            <span>スコア</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="stat">
+            <span>コンボ</span>
+            <strong id="combo">0</strong>
+          </div>
+          <div class="stat">
+            <span>正答率</span>
+            <strong id="accuracy">0%</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="stage" aria-label="プレイエリア">
+        <div class="round-line">
+          <span id="roundLabel">ROUND 0 / 10</span>
+          <span id="speedLabel">0.70s</span>
+        </div>
+
+        <div class="meter" aria-hidden="true">
+          <span id="meterBar"></span>
+        </div>
+
+        <div class="difficulty-panel" aria-label="難易度選択">
+          <span>難易度</span>
+          <div class="difficulty-options" role="group" aria-label="難易度">
+            <button class="difficulty-button" type="button" data-level="beginner" aria-pressed="false">初級</button>
+            <button class="difficulty-button is-active" type="button" data-level="intermediate" aria-pressed="true">中級</button>
+            <button class="difficulty-button" type="button" data-level="advanced" aria-pressed="false">上級</button>
+          </div>
+          <strong id="difficultySummary">10問 / 4択 / 標準</strong>
+        </div>
+
+        <div id="flashZone" class="flash-zone">
+          <p id="flashWord" class="flash-word">READY</p>
+          <p id="flashHint" class="flash-hint">START</p>
+        </div>
+
+        <div id="choices" class="choices" hidden></div>
+
+        <p id="resultText" class="result-text" aria-live="assertive"></p>
+
+        <div id="resultPanel" class="result-panel" hidden>
+          <div class="result-card">
+            <span>ランク</span>
+            <strong id="rankText">-</strong>
+          </div>
+          <div class="result-card">
+            <span>ベスト</span>
+            <strong id="bestScoreText">0</strong>
+          </div>
+          <div class="result-card">
+            <span>更新差分</span>
+            <strong id="scoreDiffText">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottom-panel" aria-label="操作">
+        <button id="startButton" class="primary-button" type="button">START</button>
+        <button id="resetButton" class="sub-button" type="button" disabled>RESET</button>
+      </section>
+
+      <div id="particleLayer" class="particle-layer" aria-hidden="true"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
