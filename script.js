@@ -93,10 +93,12 @@ const flashZoneEl = document.querySelector("#flashZone");
 const flashWordEl = document.querySelector("#flashWord");
 const flashHintEl = document.querySelector("#flashHint");
 const choicesEl = document.querySelector("#choices");
+const choicesFrameEl = document.querySelector("#choicesFrame");
 const resultTextEl = document.querySelector("#resultText");
 const startButtonEl = document.querySelector("#startButton");
 const resetButtonEl = document.querySelector("#resetButton");
 const particleLayerEl = document.querySelector("#particleLayer");
+const gameShellEl = document.querySelector(".game-shell");
 const difficultySummaryEl = document.querySelector("#difficultySummary");
 const difficultyButtonEls = document.querySelectorAll(".difficulty-button");
 const resultPanelEl = document.querySelector("#resultPanel");
@@ -220,11 +222,13 @@ function showChoices(answer) {
   choicesEl.hidden = false;
   state.accepting = true;
   state.choiceStartedAt = performance.now();
+  keepMobileAnswerAreaVisible();
 }
 
 function answerChoice(button) {
   if (!state.accepting) return;
 
+  button.blur();
   state.accepting = false;
   const selected = button.dataset.word;
   const isCorrect = selected === state.answer;
@@ -339,6 +343,21 @@ function updateDifficultyButtons() {
 function setDifficultyControlsEnabled(isEnabled) {
   difficultyButtonEls.forEach((button) => {
     button.disabled = !isEnabled;
+  });
+}
+
+function keepMobileAnswerAreaVisible() {
+  if (!window.matchMedia("(max-width: 720px)").matches) return;
+
+  requestAnimationFrame(() => {
+    const shellRect = gameShellEl.getBoundingClientRect();
+    const frameRect = choicesFrameEl.getBoundingClientRect();
+    const hasRoomBelow = frameRect.bottom <= shellRect.bottom - 70;
+    const hasRoomAbove = frameRect.top >= shellRect.top;
+
+    if (!hasRoomBelow || !hasRoomAbove) {
+      choicesFrameEl.scrollIntoView({ block: "nearest", inline: "nearest" });
+    }
   });
 }
 
